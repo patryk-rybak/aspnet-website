@@ -1,0 +1,31 @@
+@model shop.Models.LoginModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logowanie</title>
+</head>
+<body>
+    <h2>Logowanie</h2>
+
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        @Html.Hidden("categoryId", (int?)ViewBag.CategoryId)
+        <div>
+            @Html.LabelFor(model => model.Email)
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.Password)
+            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Zaloguj</button>
+        </div>
+    }
+</body>
+</html>

@@ -1,0 +1,75 @@
+@model shop.Models.ProductModel
+@using shop.Data
+@{
+    var categories = ViewBag.Categories as List<Category>;
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodaj produkt</title>
+</head>
+<body>
+
+
+<h2>Dodaj produkt</h2>
+
+@using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post))
+{
+    <!-- Dane produktu -->
+    <div>
+        <label for="Name">Nazwa produktu:</label>
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
+    </div>
+
+    <div>
+        <label for="Description">Opis produktu:</label>
+        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = 4 })
+        @Html.ValidationMessageFor(model => model.Description, null, new { @class = "text-danger" })
+    </div>
+
+    <div>
+        <label for="Price">Cena produktu:</label>
+        @Html.TextBoxFor(model => model.Price, new { @class = "form-control", type = "number", step = "0.01" })
+        @Html.ValidationMessageFor(model => model.Price, null, new { @class = "text-danger" })
+    </div>
+
+    <!-- Kategorie produktu -->
+    <div>
+        @if (categories != null)
+        {
+            <label for="CategoryName">Kategoria produktu:</label>
+            @Html.DropDownListFor(model => model.CategoryName, new SelectList(categories.Select(c => c.name).ToList()), "Wybierz kategorię")
+        }
+        else
+        {
+            <p>Brak dostępnych kategorii</p>
+        }
+        @Html.ValidationMessageFor(model => model.CategoryName, null, new { @class = "text-danger" })
+    </div>
+
+    <!-- Dodanie nowej kategorii -->
+    <div>
+        <label for="categoryName">Nowa kategoria:</label>
+        @Html.TextBox("newCategoryName", null, new { @class = "form-control" })
+        <!-- Przycisk akcji -->
+        <button type="submit" name="action" value="addCategory">Dodaj kategorię</button>
+    </div>
+    <br><br>
+    
+    <!-- Przycisk akcji -->
+    <div>
+        <button type="submit" name="action" value="addProduct">Zapisz produkt</button>
+    </div>
+}
+
+
+@* chyba nie dziala ggowno jebane *@
+@Html.ValidationSummary(true, "Popraw poniższe błędy:", new { @class = "text-danger" })
+
+</body>
+</html>

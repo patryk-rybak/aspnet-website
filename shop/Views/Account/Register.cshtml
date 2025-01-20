@@ -1,0 +1,37 @@
+@model shop.Models.RegisterModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rejestracja</title>
+</head>
+<body>
+    <h2>Logowanie</h2>
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+    {
+        @Html.Hidden("categoryId", (int?)ViewBag.CategoryId)
+        <div>
+            @Html.LabelFor(model => model.Name)
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.Email)
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.Password)
+            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Rejestruj</button>
+        </div>
+    }
+</body>
+</html>
