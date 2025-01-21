@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.StaticAssets;
+using Microsoft.EntityFrameworkCore;
 
 namespace shop.Data
 {
@@ -16,11 +17,13 @@ namespace shop.Data
             }
         }
 
-        public static async Task CreateProducts(AppDbContext context)
+        public static async Task CreateAdmin(AppDbContext context)
         {
-            if (!context.Products.Any())
+            // ciekawe co jak nie bedize roli
+            var admin_role_id = context.Roles.FirstOrDefaultAsync(r => r.name == "admin").Result.id;
+            if (!context.UserRoles.Select(ur => ur.role_id == ).Any())
             {
-                //..
+
             }
         }
     }

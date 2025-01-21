@@ -50,7 +50,7 @@
 <div class="category-selector">
     <select onchange="window.location.href='/Home/Index?categoryId=' + this.value">
         <option value="">Example Products</option>
-        @foreach (var category in ViewBag.Categories)
+        @foreach (var category in categories)
         {
             <option value="@category.id" @(categoryId == category.id ? "selected" : "")>@category.name</option>
         }

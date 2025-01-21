@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/patryk/aspnetProject/shop/shop.csproj": {}
+    "/home/patryk/Documents/aspnetwebsite/shop/shop.csproj": {}
   },
   "projects": {
-    "/home/patryk/aspnetProject/shop/shop.csproj": {
+    "/home/patryk/Documents/aspnetwebsite/shop/shop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/patryk/aspnetProject/shop/shop.csproj",
+        "projectUniqueName": "/home/patryk/Documents/aspnetwebsite/shop/shop.csproj",
         "projectName": "shop",
-        "projectPath": "/home/patryk/aspnetProject/shop/shop.csproj",
+        "projectPath": "/home/patryk/Documents/aspnetwebsite/shop/shop.csproj",
         "packagesPath": "/home/patryk/.nuget/packages/",
-        "outputPath": "/home/patryk/aspnetProject/shop/obj/",
+        "outputPath": "/home/patryk/Documents/aspnetwebsite/shop/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/patryk/.nuget/NuGet/NuGet.Config"
@@ -81,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

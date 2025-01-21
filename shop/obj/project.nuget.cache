@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XT5SWsH/dG0=",
+  "dgSpecHash": "a4KiBYa7Mtk=",
   "success": true,
-  "projectFilePath": "/home/patryk/aspnetProject/shop/shop.csproj",
+  "projectFilePath": "/home/patryk/Documents/aspnetwebsite/shop/shop.csproj",
   "expectedPackageFiles": [
     "/home/patryk/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/home/patryk/.nuget/packages/microsoft.entityframeworkcore/9.0.0/microsoft.entityframeworkcore.9.0.0.nupkg.sha512",

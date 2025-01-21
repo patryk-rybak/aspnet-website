@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "G6FGLxJq1vY049mI7G9UIGquMfkve7PZxHjQhxeWp44=",
+  "Hash": "IG+LoNZZQEYuYGlXlRbqJ086BuZA6ZsW2SgbOkEbC08=",
   "Source": "shop",
   "BasePath": "_content/shop",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "shop/wwwroot",
       "Source": "shop",
-      "ContentRoot": "/home/patryk/aspnetProject/shop/wwwroot/",
+      "ContentRoot": "/home/patryk/Documents/aspnetwebsite/shop/wwwroot/",
       "BasePath": "_content/shop",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "/home/patryk/aspnetProject/shop/obj/Debug/net9.0/compressed/qvgrsiobqk-5ipweew5fc.gz",
+      "Identity": "/home/patryk/Documents/aspnetwebsite/shop/obj/Debug/net9.0/compressed/qvgrsiobqk-5ipweew5fc.gz",
       "SourceId": "shop",
       "SourceType": "Discovered",
-      "ContentRoot": "/home/patryk/aspnetProject/shop/obj/Debug/net9.0/compressed/",
+      "ContentRoot": "/home/patryk/Documents/aspnetwebsite/shop/obj/Debug/net9.0/compressed/",
       "BasePath": "_content/shop",
       "RelativePath": "css/index#[.{fingerprint=5ipweew5fc}]?.css.gz",
       "AssetKind": "All",
@@ -28,20 +28,20 @@
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "/home/patryk/aspnetProject/shop/wwwroot/css/index.css",
+      "RelatedAsset": "/home/patryk/Documents/aspnetwebsite/shop/wwwroot/css/index.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
       "Fingerprint": "5ipweew5fc",
       "Integrity": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "/home/patryk/aspnetProject/shop/wwwroot/css/index.css"
+      "OriginalItemSpec": "/home/patryk/Documents/aspnetwebsite/shop/wwwroot/css/index.css"
     },
     {
-      "Identity": "/home/patryk/aspnetProject/shop/wwwroot/css/index.css",
+      "Identity": "/home/patryk/Documents/aspnetwebsite/shop/wwwroot/css/index.css",
       "SourceId": "shop",
       "SourceType": "Discovered",
-      "ContentRoot": "/home/patryk/aspnetProject/shop/wwwroot/",
+      "ContentRoot": "/home/patryk/Documents/aspnetwebsite/shop/wwwroot/",
       "BasePath": "_content/shop",
       "RelativePath": "css/index#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -62,7 +62,7 @@
   "Endpoints": [
     {
       "Route": "css/index.5ipweew5fc.css",
-      "AssetFile": "/home/patryk/aspnetProject/shop/obj/Debug/net9.0/compressed/qvgrsiobqk-5ipweew5fc.gz",
+      "AssetFile": "/home/patryk/Documents/aspnetwebsite/shop/obj/Debug/net9.0/compressed/qvgrsiobqk-5ipweew5fc.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -85,7 +85,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 10 Jan 2025 22:20:00 GMT"
+          "Value": "Mon, 20 Jan 2025 19:58:10 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -125,7 +125,7 @@
     },
     {
       "Route": "css/index.5ipweew5fc.css",
-      "AssetFile": "/home/patryk/aspnetProject/shop/wwwroot/css/index.css",
+      "AssetFile": "/home/patryk/Documents/aspnetwebsite/shop/wwwroot/css/index.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -146,7 +146,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 10 Jan 2025 22:20:00 GMT"
+          "Value": "Mon, 20 Jan 2025 19:58:10 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -170,7 +170,7 @@
     },
     {
       "Route": "css/index.5ipweew5fc.css.gz",
-      "AssetFile": "/home/patryk/aspnetProject/shop/obj/Debug/net9.0/compressed/qvgrsiobqk-5ipweew5fc.gz",
+      "AssetFile": "/home/patryk/Documents/aspnetwebsite/shop/obj/Debug/net9.0/compressed/qvgrsiobqk-5ipweew5fc.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -191,7 +191,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 10 Jan 2025 22:20:00 GMT"
+          "Value": "Mon, 20 Jan 2025 19:58:10 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -223,7 +223,7 @@
     },
     {
       "Route": "css/index.css",
-      "AssetFile": "/home/patryk/aspnetProject/shop/obj/Debug/net9.0/compressed/qvgrsiobqk-5ipweew5fc.gz",
+      "AssetFile": "/home/patryk/Documents/aspnetwebsite/shop/obj/Debug/net9.0/compressed/qvgrsiobqk-5ipweew5fc.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -246,7 +246,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 10 Jan 2025 22:20:00 GMT"
+          "Value": "Mon, 20 Jan 2025 19:58:10 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -278,7 +278,7 @@
     },
     {
       "Route": "css/index.css",
-      "AssetFile": "/home/patryk/aspnetProject/shop/wwwroot/css/index.css",
+      "AssetFile": "/home/patryk/Documents/aspnetwebsite/shop/wwwroot/css/index.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -299,7 +299,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 10 Jan 2025 22:20:00 GMT"
+          "Value": "Mon, 20 Jan 2025 19:58:10 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -315,7 +315,7 @@
     },
     {
       "Route": "css/index.css.gz",
-      "AssetFile": "/home/patryk/aspnetProject/shop/obj/Debug/net9.0/compressed/qvgrsiobqk-5ipweew5fc.gz",
+      "AssetFile": "/home/patryk/Documents/aspnetwebsite/shop/obj/Debug/net9.0/compressed/qvgrsiobqk-5ipweew5fc.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -336,7 +336,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 10 Jan 2025 22:20:00 GMT"
+          "Value": "Mon, 20 Jan 2025 19:58:10 GMT"
         },
         {
           "Name": "Cache-Control",
