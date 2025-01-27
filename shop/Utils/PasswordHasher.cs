@@ -1,5 +1,5 @@
 using BCrypt.Net;
-namespace shop.Authentication
+namespace shop.Utils
 {
     public class PasswordHasher
     {

@@ -1,8 +1,9 @@
 using shop.Data;
 using shop.Models;
 using Microsoft.EntityFrameworkCore;
+using shop.Utils;
 
-namespace shop.Authentication
+namespace shop.Services
 {
     public class AuthService
     {
@@ -14,7 +15,7 @@ namespace shop.Authentication
             _context = context;
         }
 
-        public async Task Register(RegisterModel model)
+        public async Task Register(RegisterModel model, bool is_admin = false)
         {
             var hashPassword = _hasher.HashPassword(model.Password);
 
@@ -24,6 +25,9 @@ namespace shop.Authentication
 
             var password = new Password { user_id = user.id, hash = hashPassword };
             await _context.Passwords.AddAsync(password);
+
+            if (is_admin)
+                model.Role = "admin";
 
             var selectedRole = await _context.Roles.SingleOrDefaultAsync(r => r.name == model.Role);
             if(selectedRole == null)

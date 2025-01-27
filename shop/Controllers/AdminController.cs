@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using shop.Models;
 using System.Security.Claims;
-using shop.Authentication;
 using shop.Data;
-using shop.ProductCategory;
+using shop.Services;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -70,6 +69,14 @@ public class AdminController : Controller
 
         ViewBag.Categories = await _prodCatService.GetCategories();
         return View(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> DeleteProduct(int productId)
+    {
+        await _prodCatService.DeleteProduct(productId);
+        var returnUrl = Request.Headers["Referer"].ToString();
+        return Redirect(returnUrl);
     }
 
     [HttpGet]

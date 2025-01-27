@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using shop.Data;
 using shop.Models;
-using shop.ProductCategory;
+using shop.Services;
 
 namespace shop.Controllers; //niepewny czy jest dobrze
 
@@ -47,9 +47,11 @@ public class HomeController : Controller
             return Redirect(Request.Headers["Referer"].ToString());
         }
 
-        List<Product> products = await _prodCatService.SearchProductsByQuery(query);
+        var (products, hasMatches, howMany) = await _prodCatService.SearchProductsByQuery(query);
         ViewBag.FrontProducts = products;
         ViewBag.CategoryId = null;
+        ViewBag.HasMatched = hasMatches;
+        ViewBag.HowMany = howMany;
         List<Category> categories = await _prodCatService.GetCategories();
         ViewBag.Categories = categories;
         return View("Index");

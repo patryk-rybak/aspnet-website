@@ -6,6 +6,8 @@
     var categoryId = ViewBag.CategoryId as int?;
     var isAuthenticated = User.Identity != null && User.Identity.IsAuthenticated;
     var isAdmin = User.IsInRole("admin");
+    var hasMatched = ViewBag.HasMatched as bool?;
+    var howMany = ViewBag.HowMany as int?;
 }
 
 <!DOCTYPE html>
@@ -18,12 +20,11 @@
 </head>
 <body>
 
-<!-- Nagłówek -->
 <header>
     <div>
         @if (isAuthenticated)
         {
-            <a href="/Cart" style="margin-left: 10px;">Koszyk</a>
+            @Html.ActionLink("Shopping Cart", "Cart", "ShoppingCart")
         }
     </div>
     <div>
@@ -40,7 +41,6 @@
     </div>
 </header>
 
-<!-- Panel administratora -->
 @if (isAdmin)
 {
     @Html.Partial("_AdminControlPanel")
@@ -57,7 +57,6 @@
     </select>
 </div>
 
-<!-- Wyszukiwanie -->
 <div class="search-bar">
     @using (Html.BeginForm("Search", "Home", FormMethod.Get))
     {
@@ -66,7 +65,6 @@
     }
 </div>
 
-<!-- Propozycje produktów -->
 <div class="propositions">
     @if (frontProducts != null && frontProducts.Any())
     {
@@ -79,9 +77,23 @@
             <h2>Propozycje produktów</h2>
         }
 
+        @if (hasMatched != null && !(bool)hasMatched)
+        {
+            <p>Brak wyników wyszukiwania.</p>
+            <p>Najbardziej pasujące do Twojego zapytania:</p>
+        }
+        @if(hasMatched != null && (bool)hasMatched)
+        {
+            <p>Wyniki wyszukiwania:</p>
+        }
         <!-- Wyświetlanie produktów -->
+        int counter = 0;
         @foreach (var product in frontProducts)
         {
+            @if (howMany != null && counter == (int)howMany)
+            {
+                <p>Możliwe dopasowania:</p>
+            }
             <div>
                 <div>
                     <span>@product.name - @product.description - @product.price</span>
@@ -89,16 +101,17 @@
                     <!-- Dodawnie do koszyka dla zalogowanych --> 
                     @if(isAuthenticated)
                     {
-                        @Html.ActionLink("Dodaj do koszyka", "AddToCart", "Account", new { productId = product.id }, null)
+                        @Html.ActionLink("Add to cart", "Add", "ShoppingCart", new { productId = product.id }, null)
                     }
                     <!-- Przyciski edycji i usuwania widoczne tylko dla adminów -->
                     @if (isAdmin)
                     {
-                        @Html.ActionLink("Edytuj", "EditProduct", "Admin", new { id = product.id }, new { @class = "btn-edit", style = "margin-left: 10px;" })
-                        @Html.ActionLink("Usuń", "DeleteProduct", "Admin", new { id = product.id }, new { @class = "btn-delete", style = "margin-left: 10px;" })
+                        @Html.ActionLink("Edytuj", "EditProduct", "Admin", new { productId = product.id }, new { @class = "btn-edit", style = "margin-left: 10px;" })
+                        @Html.ActionLink("Usuń", "DeleteProduct", "Admin", new { productId = product.id }, new { @class = "btn-delete", style = "margin-left: 10px;" })
                     }
                 </div>
             </div>
+            counter++;
         }
     }
     else
@@ -107,9 +120,8 @@
     }
 </div>
 
-<!-- Stopka -->
 <footer>
-    dupa
+    Hell yeah!
 </footer>
 
 </body>

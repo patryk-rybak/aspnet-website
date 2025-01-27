@@ -2,7 +2,7 @@ using shop.Data;
 using shop.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace shop.ProductCategory
+namespace shop.Services
 {
     public class ProdCatService
     {
@@ -50,20 +50,29 @@ namespace shop.ProductCategory
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeleteProduct(int id)
+        {
+            var product = await _context.Products.SingleOrDefaultAsync(p => p.id == id);
+            if (product != null)
+            {
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<Product?> GetProduct(int id)
+        {
+            return await _context.Products.SingleOrDefaultAsync(p => p.id == id);
+        }
+
         public async Task<Category> AddCategory(CategoryModel model)
         {
-            Console.WriteLine("in");
             var category = await _context.Categories.SingleOrDefaultAsync(c => c.name == model.Name);
-            Console.WriteLine("pocz");
-            Console.WriteLine(category);
-            Console.WriteLine("kon");
             if (category == null)
             {
-                Console.WriteLine("in");
                 category = new Category { name = model.Name };
                 await _context.Categories.AddAsync(category);
                 await _context.SaveChangesAsync();
-                Console.WriteLine("in");
                 return await _context.Categories.SingleOrDefaultAsync(c => c.name == model.Name);
             }
             else
@@ -78,7 +87,6 @@ namespace shop.ProductCategory
             List<Category> categories = await _context.Categories.ToListAsync();
             if (categories == null || categories.Count == 0)
             {
-                // throw new Exception("Brak kategorii w bazie danych.");
                 return new List<Category>();
             }
             return categories;
@@ -104,21 +112,21 @@ namespace shop.ProductCategory
             return products;
         }
 
-        public async Task<List<Product>> SearchProductsByQuery(string query)
+        public async Task<Tuple<List<Product>, bool, int>> SearchProductsByQuery(string query)
         {
+            bool hasMatches = false;
+            int howMany = 0;
+
             var queryWords = query.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             var products = await _context.Products.ToListAsync();
 
-            var matchedNameProducts = products.Select(p => new
-            {
-                Product = p,
-                Score = queryWords.Sum(qw => 
-                    p.name.Split(' ', StringSplitOptions.RemoveEmptyEntries).Count(pw => pw.Contains(qw, StringComparison.OrdinalIgnoreCase))
-                )
-            })
-            .OrderByDescending(sp => sp.Score)
-            .Select(sp => sp.Product)
-            .ToList();
+            var matchedNameProducts = products
+                .Where(p => queryWords.Any(qw => p.name.Contains(qw, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+
+            howMany = matchedNameProducts.Count;;
+            if (howMany > 0)
+                hasMatches = true;
 
             var kindaMatchedNameProducts = products
                 .Where(p => !matchedNameProducts.Contains(p))
@@ -134,7 +142,8 @@ namespace shop.ProductCategory
                 .Take(10) // limit to 10
                 .ToList();
 
-            return matchedNameProducts.Concat(kindaMatchedNameProducts).ToList();
+            var resultProducts = matchedNameProducts.Concat(kindaMatchedNameProducts).ToList();
+            return new Tuple<List<Product>, bool, int>(resultProducts, hasMatches, howMany);
         }
 
         private int LevenshteinDistance(string a, string b)

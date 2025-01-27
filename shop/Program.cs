@@ -2,8 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore; // DODAC
 using shop.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
-using shop.Authentication;
-using shop.ProductCategory;
+using shop.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,10 +20,10 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
  });
 
 // Add services to the container.
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<ShoppingCartService>();
 builder.Services.AddScoped<ProdCatService>();
-
-// Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -33,8 +32,12 @@ var app = builder.Build();
 using(var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var authService = scope.ServiceProvider.GetRequiredService<AuthService>();
+    var prodCatService = scope.ServiceProvider.GetRequiredService<ProdCatService>();
     await GenerateData.CreateRoles(context);
-    // dodatkowo dodac jeszce uzytkownia admina jezeli nie ma !!!!!!!!!!
+    await GenerateData.CreateAdmin(context, authService);
+    await GenerateData.CreateCategories(context, prodCatService);
+    await GenerateData.CreateProducts(context, prodCatService);
 }
 
 // Configure the HTTP request pipeline.

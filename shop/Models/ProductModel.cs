@@ -11,7 +11,7 @@ public class ProductModel
     [Required]
     public string Description { get; set; }
     [Required]
-    [Range(0.00, 1000000)]
+    [Range(0.00, 1000000.00)]
     public decimal Price { get; set; }
     [Required] [CategoryExistsAttribute]
     public string CategoryName { get; set; }

@@ -1,11 +1,10 @@
-using System.Diagnostics; // nwm po co to jest
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using shop.Models;
 using System.Security.Claims;
-using shop.Authentication;
+using shop.Services;
 using shop.Data;
 
 namespace shop.Controllers; //niepewny czy jest dobrze
@@ -54,7 +53,8 @@ public class AccountController : Controller
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, model.Email),
-                    new Claim(ClaimTypes.Name, user.name)
+                    new Claim(ClaimTypes.Name, user.name),
+                    new Claim(ClaimTypes.NameIdentifier, user.id.ToString())
                 };
                 claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
 
@@ -102,11 +102,4 @@ public class AccountController : Controller
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToAction("Index", "Home", new { categoryId });
     }
-
-    public IActionResult AddToCart()
-    {
-        return View();
-    }
-
-    // ... cart
 }
