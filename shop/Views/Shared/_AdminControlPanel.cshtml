@@ -1,3 +1,25 @@
-@Html.ActionLink("Dodaj nowy produkt", "AddProduct", "Admin", null, new { @class = "btn-add", style = "margin-top: 20px;" })
-<br>
-@Html.ActionLink("Dodaj kategorie", "AddCategory", "Admin", null, new { @class = "btn-add", style = "margin-top: 20px;" })
+<style>
+    .admin-panel {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .admin-panel .btn {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border: none;
+    }
+    .admin-panel .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="admin-panel">
+    @Html.ActionLink("Add new product", "AddProduct", "Admin", null, new { @class = "btn" })
+    @Html.ActionLink("Add new category", "AddCategory", "Admin", null, new { @class = "btn" })
+    @Html.ActionLink("Show orders", "ShowOrders", "Admin", null, new { @class = "btn" })
+    @Html.ActionLink("Show users", "ShowUsers", "Admin", null, new { @class = "btn" })
+</div>

@@ -12,6 +12,8 @@ namespace shop.Data
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,8 +23,9 @@ namespace shop.Data
             modelBuilder.Entity<Password>().ToTable("password");
             modelBuilder.Entity<Category>().ToTable("category");
             modelBuilder.Entity<Product>().ToTable("product");
+            modelBuilder.Entity<Order>().ToTable("order");
+            modelBuilder.Entity<OrderItem>().ToTable("order_item");
             
-
             // moge jeszcze pokierowac mapowaniem atrybutow z kals na kolumny 
 
             modelBuilder.Entity<UserRole>()
@@ -48,6 +51,33 @@ namespace shop.Data
 
             modelBuilder.Entity<Category>()
             .HasKey(c => c.id);
+
+            modelBuilder.Entity<Order>()
+                .HasKey(o => o.id);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.user_id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasKey(oi => oi.id);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.Order)
+                .WithMany(o => o.OrderItems)
+                .HasForeignKey(oi => oi.order_id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.Product)
+                .WithMany(p => p.OrderItems)
+                .HasForeignKey(oi => oi.product_id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasKey(oi => new { oi.order_id, oi.product_id });
 
             // za cholere nei umiem ustawic tego password, ale dziala tez bez ustawiania 
             // modelBuilder.Entity<Product>()

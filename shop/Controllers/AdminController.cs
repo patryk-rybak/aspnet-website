@@ -9,6 +9,7 @@ using shop.Data;
 using shop.Services;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore;
 
 // chyba za duzo includow
 
@@ -21,6 +22,8 @@ public class AdminController : Controller
     private readonly AuthService _authService;
     // private readonly AppDbContext _context; // tez neipotrzbene
     private readonly ProdCatService _prodCatService;
+    private readonly OrderService _orderService;
+    private readonly AppDbContext _context;
 
 
     public AdminController
@@ -28,13 +31,17 @@ public class AdminController : Controller
         ILogger<HomeController> logger,
         AuthService authService,
         // AppDbContext context, // nie potrzebne raczej b przez servisy to robimy
-        ProdCatService prodCatService
+        ProdCatService prodCatService,
+        OrderService orderService,
+        AppDbContext context
     )
     {
         _logger = logger;
         _authService = authService;
         // _context = context; // chyba juz nie uzywam bezposrednio
         _prodCatService = prodCatService;
+        _orderService = orderService;
+        _context = context;
     }
 
     [HttpGet]
@@ -94,5 +101,19 @@ public class AdminController : Controller
             return RedirectToAction("Index", "Home");
         }
         return View(model);
+    }
+
+    public async Task<IActionResult> ShowOrders()
+    {
+        var orders = await _orderService.GetOrders();
+        ViewBag.Orders = orders;
+        return View();
+    }   
+
+    public async Task<IActionResult> ShowUsers()
+    {
+        var users = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).ToListAsync();
+        ViewBag.Users = users;
+        return View();
     }
 }

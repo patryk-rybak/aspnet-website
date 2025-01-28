@@ -10,7 +10,7 @@
     var howMany = ViewBag.HowMany as int?;
 }
 
-<!DOCTYPE html>
+@* <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -122,6 +122,281 @@
 
 <footer>
     Hell yeah!
+</footer>
+
+</body>
+</html> *@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sklep - Strona główna</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        .welcome-message {
+            margin-right: 15px;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .admin-panel {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .category-section, .search-bar {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .category-selector {
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        .search-input {
+            padding: 5px;
+            font-size: 16px;
+            width: 300px;
+        }
+
+        .search-button {
+            padding: 6px 12px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .product-propositions {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .product-actions a {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-right: 5px;
+            font-size: 14px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 3px;
+        }
+
+        .btn-add {
+            background-color: #28a745;
+        }
+
+        .btn-edit {
+            background-color: #007bff;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <div>
+            @if (isAuthenticated)
+            {
+                @Html.ActionLink("Shopping Cart", "Cart", "ShoppingCart", null, new { @class = "nav-link" })
+            }
+        </div>
+        <div>
+            @if (!isAuthenticated)
+            {
+                @Html.ActionLink("Logowanie", "Login", "Account", null, new { @class = "nav-link" })
+                @Html.ActionLink("Rejestracja", "Register", "Account", null, new { @class = "nav-link" })
+            }
+            else
+            {
+                <span class="welcome-message">Witaj, @User.Identity.Name!</span>
+                @Html.ActionLink("Wyloguj", "Logout", "Account", null, new { @class = "nav-link" })
+            }
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- Admin Control Panel -->
+    @if (isAdmin)
+    {
+        @Html.Partial("_AdminControlPanel")
+    }
+
+    <!-- Category Selector -->
+    <div class="category-section">
+        <h2>Wybierz kategorię:</h2>
+        <select onchange="window.location.href='/Home/Index?categoryId=' + this.value" class="category-selector">
+            <option value="">Example Products</option>
+            @foreach (var category in categories)
+            {
+                <option value="@category.id" @(categoryId == category.id ? "selected" : "")>@category.name</option>
+            }
+        </select>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+        {
+            @Html.TextBox("query", null, new { placeholder = "Szukaj produktu...", @class = "search-input" })
+            <button type="submit" class="search-button">Szukaj</button>
+        }
+    </div>
+
+    <!-- Product Propositions -->
+    <div class="product-propositions">
+        @if (frontProducts != null && frontProducts.Any())
+        {
+            <h2>
+                @if (categoryId.HasValue)
+                {
+                    <p>Wybrana kategoria: @categories.FirstOrDefault(c => c.id == categoryId)?.name</p>
+                }
+                else
+                {
+                    @if (hasMatched == null)
+                    {
+                        <p>Propozycje produktów</p>
+                    }
+                }
+            </h2>
+
+            @if (hasMatched != null && !(bool)hasMatched)
+            {
+                <p>Brak wyników wyszukiwania.</p>
+                <p>Najbardziej pasujące do Twojego zapytania:</p>
+            }
+            @if (hasMatched != null && (bool)hasMatched)
+            {
+                <p>Wyniki wyszukiwania:</p>
+            }
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        @if (isAuthenticated)
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int counter = 0;
+                    }
+                    @foreach (var product in frontProducts)
+                    {
+                        @if (howMany != null && counter == (int)howMany && hasMatched != null && (bool)hasMatched)
+                        {
+                            @Html.Raw("</tbody>")
+                            @Html.Raw("</table>")
+                            <p>Możliwe dopasowania:</p>
+                            @Html.Raw("<table>")
+                            @Html.Raw("<tbody>")
+                        }
+                        <tr>
+                            <td>@product.name</td>
+                            <td>@product.description</td>
+                            <td>@product.price</td>
+                            @if (isAuthenticated)
+                            {
+                                <td class="product-actions">
+                                    @if (isAuthenticated)
+                                    {
+                                        @Html.ActionLink("Add to cart", "Add", "ShoppingCart", new { productId = product.id }, new { @class = "btn-add" })
+                                    }
+                                    @if (isAdmin)
+                                    {
+                                        @Html.ActionLink("Edit", "EditProduct", "Admin", new { productId = product.id }, new { @class = "btn-edit" })
+                                        @Html.ActionLink("Delete", "DeleteProduct", "Admin", new { productId = product.id }, new { @class = "btn-delete" })
+                                    }
+                                </td>
+                            }
+                        </tr>
+                        counter++;
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Brak propozycji produktów.</p>
+        }
+    </div>
+</main>
+
+<footer>
+    <p>© Sklep - Wszystkie prawa zastrzeżone.</p>
 </footer>
 
 </body>

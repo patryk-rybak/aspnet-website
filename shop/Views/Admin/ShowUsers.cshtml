@@ -1,0 +1,52 @@
+@using shop.Data;
+@{
+    var users = ViewBag.users as List<User>;
+}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User list</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        @if (users != null && users.Count > 0)
+        {
+            <h2 class="text-center">User list</h2>
+            <table class="table table-striped mt-4">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in users)
+                    {
+                        <tr>
+                            <td>@user.id</td>
+                            <td>@user.name</td>
+                            <td>@user.email</td>
+                            <td>
+                            @foreach(var userRole in user.UserRoles)
+                            {
+                                @userRole.Role.name <br />
+                            }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h2 class="text-center">No users</h2>
+        }
+    </div>
+</body>
+</html>

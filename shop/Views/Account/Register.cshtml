@@ -1,4 +1,4 @@
-@model shop.Models.RegisterModel
+@* @model shop.Models.RegisterModel
 
 <!DOCTYPE html>
 <html>
@@ -33,5 +33,49 @@
             <button type="submit" class="btn btn-primary">Rejestruj</button>
         </div>
     }
+</body>
+</html> *@
+
+@model shop.Models.RegisterModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rejestracja</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Rejestracja</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+                {
+                    @Html.Hidden("categoryId", (int?)ViewBag.CategoryId)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name)
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email)
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password)
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Rejestruj</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </body>
 </html>

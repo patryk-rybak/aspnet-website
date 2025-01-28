@@ -8,11 +8,13 @@ namespace shop.Controllers
     {
         private readonly ShoppingCartService _shoppingCartService;
         private readonly ProdCatService _prodCatService;
+        private readonly OrderService _orderService;
 
-        public ShoppingCartController(ShoppingCartService shoppingCartService, ProdCatService prodCatService)
+        public ShoppingCartController(ShoppingCartService shoppingCartService, ProdCatService prodCatService, OrderService orderService)
         {
             _shoppingCartService = shoppingCartService;
             _prodCatService = prodCatService;
+            _orderService = orderService;
         }
 
         public async Task<IActionResult> Cart()
@@ -50,6 +52,13 @@ namespace shop.Controllers
         {
             _shoppingCartService.ClearCart();
             return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+        public IActionResult Checkout()
+        {
+            _orderService.Submit(_shoppingCartService.GetCart());
+            _shoppingCartService.ClearCart();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

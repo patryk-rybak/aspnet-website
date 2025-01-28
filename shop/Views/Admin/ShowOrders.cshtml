@@ -1,0 +1,79 @@
+@using shop.Data;
+@using System.Text.Json;
+@{
+    @* var ordersJson = ViewBag.Orders as string; *@
+    var orders = ViewBag.Orders as List<Order>;
+    @* var orders = string.IsNullOrEmpty(ordersJson) ? new List<Order>() : JsonSerializer.Deserialize<List<Order>>(ordersJson); *@
+}
+
+<h2>Order Inspection</h2>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+    th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    tr:hover {
+        background-color: #ddd;
+    }
+    ul {
+        padding-left: 20px;
+    }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>User</th>
+            <th>Created At</th>
+            <th>Status</th>
+            <th>Products</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (orders != null)
+        {
+            @foreach (var order in orders)
+            {
+                if (order != null)
+                {
+                    <tr>
+                        <td>@order.id</td>
+                        <td>@(order.User != null ? $"{order.User.name} ({order.User.email})" : "Unknown User")</td>
+                        <td>@order.created_at.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                        <td>@order.status</td>
+                        <td>
+                            <ul>
+                                @if (order.OrderItems != null)
+                                {
+                                    @foreach (var item in order.OrderItems)
+                                    {
+                                        <li>@item.product_id - @(item.Product != null ? $"{item.Product.name} - {item.Product.price.ToString("C")}" : "Unknown Product")</li>
+                                    }
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">No orders found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
