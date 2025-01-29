@@ -10,129 +10,12 @@
     var howMany = ViewBag.HowMany as int?;
 }
 
-@* <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sklep - Strona główna</title>
-    <link rel="stylesheet" href="/css/index.css">
-</head>
-<body>
-
-<header>
-    <div>
-        @if (isAuthenticated)
-        {
-            @Html.ActionLink("Shopping Cart", "Cart", "ShoppingCart")
-        }
-    </div>
-    <div>
-        @if (!isAuthenticated)
-        {
-            @Html.ActionLink("Logowanie", "Login", "Account", new { categoryId = ViewBag.CategoryId }, new { style = "margin-left: 10px;" })
-            @Html.ActionLink("Rejestracja", "Register", "Account", new { categoryId = categoryId }, new { style = "margin-left: 10px;" })
-        }
-        else
-        {
-            <span>Witaj, @User.Identity.Name!</span>
-            @Html.ActionLink("Wyloguj", "Logout", "Account", new { categoryId }, new { style = "margin-left: 10px;" })
-        }
-    </div>
-</header>
-
-@if (isAdmin)
-{
-    @Html.Partial("_AdminControlPanel")
-}
-
-<!-- Wybór kategorii -->
-<div class="category-selector">
-    <select onchange="window.location.href='/Home/Index?categoryId=' + this.value">
-        <option value="">Example Products</option>
-        @foreach (var category in categories)
-        {
-            <option value="@category.id" @(categoryId == category.id ? "selected" : "")>@category.name</option>
-        }
-    </select>
-</div>
-
-<div class="search-bar">
-    @using (Html.BeginForm("Search", "Home", FormMethod.Get))
-    {
-        @Html.TextBox("query", null, new { placeholder = "Szukaj produktu...", @class = "search-input" })
-        <button type="submit" class="search-button">Szukaj</button>
-    }
-</div>
-
-<div class="propositions">
-    @if (frontProducts != null && frontProducts.Any())
-    {
-        @if (categoryId.HasValue)
-        {
-            <h2>Wybrana kategoria: @categories.FirstOrDefault(c => c.id == categoryId)?.name</h2>
-        }
-        else
-        {
-            <h2>Propozycje produktów</h2>
-        }
-
-        @if (hasMatched != null && !(bool)hasMatched)
-        {
-            <p>Brak wyników wyszukiwania.</p>
-            <p>Najbardziej pasujące do Twojego zapytania:</p>
-        }
-        @if(hasMatched != null && (bool)hasMatched)
-        {
-            <p>Wyniki wyszukiwania:</p>
-        }
-        <!-- Wyświetlanie produktów -->
-        int counter = 0;
-        @foreach (var product in frontProducts)
-        {
-            @if (howMany != null && counter == (int)howMany)
-            {
-                <p>Możliwe dopasowania:</p>
-            }
-            <div>
-                <div>
-                    <span>@product.name - @product.description - @product.price</span>
-
-                    <!-- Dodawnie do koszyka dla zalogowanych --> 
-                    @if(isAuthenticated)
-                    {
-                        @Html.ActionLink("Add to cart", "Add", "ShoppingCart", new { productId = product.id }, null)
-                    }
-                    <!-- Przyciski edycji i usuwania widoczne tylko dla adminów -->
-                    @if (isAdmin)
-                    {
-                        @Html.ActionLink("Edytuj", "EditProduct", "Admin", new { productId = product.id }, new { @class = "btn-edit", style = "margin-left: 10px;" })
-                        @Html.ActionLink("Usuń", "DeleteProduct", "Admin", new { productId = product.id }, new { @class = "btn-delete", style = "margin-left: 10px;" })
-                    }
-                </div>
-            </div>
-            counter++;
-        }
-    }
-    else
-    {
-        <p>Brak propozycji produktów.</p>
-    }
-</div>
-
-<footer>
-    Hell yeah!
-</footer>
-
-</body>
-</html> *@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sklep - Strona główna</title>
+    <title>Main page</title>
     <link rel="stylesheet" href="/css/index.css">
     <style>
         body {
@@ -275,7 +158,7 @@
             }
             else
             {
-                <span class="welcome-message">Witaj, @User.Identity.Name!</span>
+                <span class="welcome-message">Hi, @User.Identity.Name!</span>
                 @Html.ActionLink("Wyloguj", "Logout", "Account", null, new { @class = "nav-link" })
             }
         </div>
@@ -291,7 +174,7 @@
 
     <!-- Category Selector -->
     <div class="category-section">
-        <h2>Wybierz kategorię:</h2>
+        <h2>Select category</h2>
         <select onchange="window.location.href='/Home/Index?categoryId=' + this.value" class="category-selector">
             <option value="">Example Products</option>
             @foreach (var category in categories)
@@ -305,8 +188,8 @@
     <div class="search-bar">
         @using (Html.BeginForm("Search", "Home", FormMethod.Get))
         {
-            @Html.TextBox("query", null, new { placeholder = "Szukaj produktu...", @class = "search-input" })
-            <button type="submit" class="search-button">Szukaj</button>
+            @Html.TextBox("query", null, new { placeholder = "Search...", @class = "search-input" })
+            <button type="submit" class="search-button">Search</button>
         }
     </div>
 
@@ -317,21 +200,21 @@
             <h2>
                 @if (categoryId.HasValue)
                 {
-                    <p>Wybrana kategoria: @categories.FirstOrDefault(c => c.id == categoryId)?.name</p>
+                    <p>Selected category: @categories.FirstOrDefault(c => c.id == categoryId)?.name</p>
                 }
                 else
                 {
                     @if (hasMatched == null)
                     {
-                        <p>Propozycje produktów</p>
+                        <p>Example products</p>
                     }
                 }
             </h2>
 
             @if (hasMatched != null && !(bool)hasMatched)
             {
-                <p>Brak wyników wyszukiwania.</p>
-                <p>Najbardziej pasujące do Twojego zapytania:</p>
+                <p>Products not found</p>
+                <p>Possible matches:</p>
             }
             @if (hasMatched != null && (bool)hasMatched)
             {
@@ -360,7 +243,7 @@
                         {
                             @Html.Raw("</tbody>")
                             @Html.Raw("</table>")
-                            <p>Możliwe dopasowania:</p>
+                            <p>Possible matches:</p>
                             @Html.Raw("<table>")
                             @Html.Raw("<tbody>")
                         }
@@ -390,13 +273,13 @@
         }
         else
         {
-            <p>Brak propozycji produktów.</p>
+            <p>There are none produckts.</p>
         }
     </div>
 </main>
 
 <footer>
-    <p>© Sklep - Wszystkie prawa zastrzeżone.</p>
+    <p></p>
 </footer>
 
 </body>

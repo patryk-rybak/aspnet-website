@@ -7,7 +7,7 @@ using shop.Data;
 using shop.Models;
 using shop.Services;
 
-namespace shop.Controllers; //niepewny czy jest dobrze
+namespace shop.Controllers; 
 
 public class HomeController : Controller
 {
@@ -21,7 +21,7 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int? categoryId) // to mozna zamienic na dodatkowy action ktory zwroci Index view po prostu
+    public async Task<IActionResult> Index(int? categoryId) 
     {
         if (categoryId != null)
         {

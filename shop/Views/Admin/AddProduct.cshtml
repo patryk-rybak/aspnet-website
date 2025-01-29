@@ -10,12 +10,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dodaj produkt</title>
+    <title>Add product</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="text-center">Dodaj produkt</h2>
+        <h2 class="text-center">Add product</h2>
         @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post))
         {
             <!-- Dane produktu -->
@@ -42,7 +42,7 @@
                 @if (categories != null)
                 {
                     @Html.LabelFor(model => model.CategoryName, new { @class = "control-label" })
-                    @Html.DropDownListFor(model => model.CategoryName, new SelectList(categories.Select(c => c.name).ToList()), "Wybierz kategorię", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.CategoryName, new SelectList(categories.Select(c => c.name).ToList()), "Select category", new { @class = "form-control" })
                 }
                 else
                 {
@@ -55,12 +55,12 @@
             <div class="form-group">
                 @Html.Label("newCategoryName", "Nowa kategoria", new { @class = "control-label" })
                 @Html.TextBox("newCategoryName", null, new { @class = "form-control" })
-                <button type="submit" name="action" value="addCategory" class="btn btn-secondary mt-2">Dodaj kategorię</button>
+                <button type="submit" name="action" value="addCategory" class="btn btn-secondary mt-2">Add category</button>
             </div>
 
             <!-- Przycisk akcji -->
             <div class="form-group text-center">
-                <button type="submit" name="action" value="addProduct" class="btn btn-primary">Zapisz produkt</button>
+                <button type="submit" name="action" value="addProduct" class="btn btn-primary">Save product</button>
             </div>
         }
 
