@@ -52,6 +52,3 @@ On startup, the app seeds initial data:
 - Search:
   - exact keyword match
   - fuzzy match using Levenshtein edit distance
-
-## For Recruiters (Quick Overview)
-This project showcases a full MVC flow with DB-backed auth, role-based access control, admin tooling, seeded data, and a custom fuzzy search algorithm (Levenshtein) for product discovery.
