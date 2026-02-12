@@ -42,7 +42,7 @@ On startup, the app seeds initial data:
 
 ## Features
 - Cookie-based authentication
-- Passwords are hashed with bcrypt (no plaintext storage)
+- Passwords are hashed with bcrypt
 - Roles: `admin` and `user`
 - Admin panel:
   - add product
