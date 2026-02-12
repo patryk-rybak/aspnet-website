@@ -1,7 +1,0 @@
-/home/patryk/shop/obj/Debug/net8.0/shop.GeneratedMSBuildEditorConfig.editorconfig
-/home/patryk/shop/obj/Debug/net8.0/shop.AssemblyInfoInputs.cache
-/home/patryk/shop/obj/Debug/net8.0/shop.AssemblyInfo.cs
-/home/patryk/shop/obj/Debug/net8.0/shop.csproj.CoreCompileInputs.cache
-/home/patryk/shop/obj/Debug/net8.0/shop.MvcApplicationPartsAssemblyInfo.cache
-/home/patryk/shop/obj/Debug/net8.0/shop.RazorAssemblyInfo.cache
-/home/patryk/shop/obj/Debug/net8.0/shop.RazorAssemblyInfo.cs
