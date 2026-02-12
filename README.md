@@ -6,7 +6,7 @@ Simple ASP.NET Core MVC shop app with cookie auth, admin panel, shopping cart, a
 - .NET SDK 9.x
 - PostgreSQL 14+
 
-## Quick Start (Linux)
+## Quick Start 
 1. Configure the connection string in `shop/appsettings.json`:
 ```
 Host=localhost;Database=example;Username=test_user;Password=test_pwd
